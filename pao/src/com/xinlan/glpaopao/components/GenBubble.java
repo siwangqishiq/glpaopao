@@ -28,7 +28,7 @@ public class GenBubble {
 			Color.GREEN, Color.RED, Color.YELLOW };
 	private int waitDelay = 20;
 
-	private float absSpeed = 10f;
+	private float absSpeed = 7f;
 	private float mBubble_dx, mBubble_dy;
 
 	public GenBubble(MainView context) {
@@ -80,23 +80,24 @@ public class GenBubble {
 
 	public boolean onTouchEvent(MotionEvent event) {
 		float touch_x = event.getX();
-		float touch_y = MainView.screenH - event.getY();
+		float touch_y = MainView.screenH - event.getY();// 坐标转化 适应opengl的坐标系
 		if (STATUS_READY == status) {
 			switch (MotionEventCompat.getActionMasked(event)) {
 			case MotionEvent.ACTION_DOWN:
+				context.arrow.setIsShow(true);
 				// context.arrow.isShow=true;
-				// context.arrow.resetDegrees(touch_x-mBubble.x,
-				// touch_y-mBubble.y, mBubble.x);
+				context.arrow.resetDegrees(touch_x - mBubble.x, touch_y
+						- mBubble.y, mBubble.x);
 				break;
 			case MotionEvent.ACTION_MOVE:
-				// context.arrow.isShow=true;
-				// context.arrow.resetDegrees(touch_x-mBubble.x,
-				// touch_y-mBubble.y, mBubble.x);
+				context.arrow.setIsShow(true);
+				context.arrow.resetDegrees(touch_x - mBubble.x, touch_y
+						- mBubble.y, mBubble.x);
 				break;
 			case MotionEvent.ACTION_UP:
 				calculateVector(touch_x, touch_y);
 				status = STATUS_FIRING;
-				// context.arrow.isShow=false;
+				context.arrow.setIsShow(false);
 				break;
 			}// end switch
 		}
@@ -108,7 +109,6 @@ public class GenBubble {
 		float vector_y = touch_y - mBubble.y;
 		float vector_len = (float) Math.sqrt(vector_x * vector_x + vector_y
 				* vector_y);// 计算单位向量
-
 		mBubble_dx = absSpeed * (vector_x / vector_len);
 		mBubble_dy = absSpeed * (vector_y / vector_len);
 		mBubble.setSpeed(mBubble_dx, mBubble_dy);

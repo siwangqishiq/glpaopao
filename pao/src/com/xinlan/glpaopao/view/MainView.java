@@ -2,6 +2,7 @@ package com.xinlan.glpaopao.view;
 
 import com.xinlan.base.components.MainRender;
 import com.xinlan.glpaopao.MainActivity;
+import com.xinlan.glpaopao.components.Arrow;
 import com.xinlan.glpaopao.components.Background;
 import com.xinlan.glpaopao.components.BitmapDataContent;
 import com.xinlan.glpaopao.components.Bubble;
@@ -21,6 +22,7 @@ public class MainView extends GLSurfaceView implements Runnable {
 	public BitmapDataContent mContent;
 	public Background mBackground;
 	public GenBubble genBubble;
+	public Arrow arrow;
 
 	public MainView(Context context) {
 		super(context);
@@ -42,17 +44,8 @@ public class MainView extends GLSurfaceView implements Runnable {
 		mBackground.loadImage(mContent.getBgBitmap());
 		mRender.addMesh(mBackground.getMesh());
 
+		arrow =new Arrow(this);
 		genBubble = new GenBubble(this);
-		// Bitmap
-		// bgBitmap=XinlanUtils.loadBitmapFromAssets("game_background_layer_3.png",
-		// mContext);
-		// mBackgroud = new Background(bgBitmap,screenW,screenH);
-		// mRender.addMesh(mBackgroud.getMesh());
-		//
-		// mWave = new Waves(XinlanUtils.loadBitmapFromAssets("waves.png",
-		// mContext),
-		// screenW,screenH);
-		// mRender.addMesh(mWave.getMesh());
 	}
 
 	private void gameMain() {

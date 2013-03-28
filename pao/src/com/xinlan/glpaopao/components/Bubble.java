@@ -87,9 +87,12 @@ public class Bubble {
 		y += dy;
 		mImage.x = x - radius;
 		mImage.y = y - radius;
-		
-		if(x<=-radius || x>=MainView.screenW+radius || y<=-radius || y>=MainView.screenH+radius){
-			context.genBubble.status=GenBubble.STATUS_CANLOAD;
+
+		if (x <= -radius || x >= MainView.screenW + radius || y <= -radius
+				|| y >= MainView.screenH + radius) {
+			context.genBubble.status = GenBubble.STATUS_CANLOAD;
+			context.mRender.removeMesh(mImage);
+			System.gc();
 		}
 	}
 }// end class

@@ -28,6 +28,7 @@ public class Mesh {
 	public float rx = 0;
 	public float ry = 0;
 	public float rz = 0;
+	public float scale=-1;
 	public boolean shouldBeDrawn = true;
 
 	public void draw(GL10 gl) {
@@ -59,7 +60,12 @@ public class Mesh {
 		gl.glRotatef(rx, 1, 0, 0);
 		gl.glRotatef(ry, 0, 1, 0);
 		gl.glRotatef(rz, 0, 0, 1);
-
+		if(scale>0){//缩放
+			//gl.glPushMatrix();
+			gl.glScalef(scale, scale, 1);
+			//gl.glPopMatrix();
+		}
+		
 		gl.glDrawElements(GL10.GL_TRIANGLES, mNumOfIndices,
 				GL10.GL_UNSIGNED_SHORT, mIndicesBuffer);
 		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);

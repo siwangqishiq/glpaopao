@@ -4,19 +4,23 @@ import com.xinlan.base.components.MainRender;
 import com.xinlan.glpaopao.MainActivity;
 import com.xinlan.glpaopao.components.Background;
 import com.xinlan.glpaopao.components.BitmapDataContent;
+import com.xinlan.glpaopao.components.Bubble;
+import com.xinlan.glpaopao.components.GenBubble;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
+import android.view.MotionEvent;
 
 public class MainView extends GLSurfaceView implements Runnable {
-	private MainRender mRender;
+	public MainRender mRender;
 	private Thread mThread;
 
 	public static int screenH, screenW;
-	
-	//控件
+
+	// 控件
 	public BitmapDataContent mContent;
 	public Background mBackground;
+	public GenBubble genBubble;
 
 	public MainView(Context context) {
 		super(context);
@@ -29,12 +33,16 @@ public class MainView extends GLSurfaceView implements Runnable {
 	}
 
 	private void initGame() {
+		Bubble.RADIUS = MainView.screenW / 25;
+
 		mContent = new BitmapDataContent(this);
 		mContent.loadImages();
-		
+
 		mBackground = new Background(this);
 		mBackground.loadImage(mContent.getBgBitmap());
 		mRender.addMesh(mBackground.getMesh());
+
+		genBubble = new GenBubble(this);
 		// Bitmap
 		// bgBitmap=XinlanUtils.loadBitmapFromAssets("game_background_layer_3.png",
 		// mContext);
@@ -49,6 +57,7 @@ public class MainView extends GLSurfaceView implements Runnable {
 
 	private void gameMain() {
 		mBackground.logic();
+		genBubble.logic();
 		// mBackgroud.update();
 		// mWave.update();
 	}
@@ -68,5 +77,12 @@ public class MainView extends GLSurfaceView implements Runnable {
 				}
 			}// end if
 		}
+	}
+
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		// genBubble.onTouchEvent(event);
+		genBubble.onTouchEvent(event);
+		return true;
 	}
 }// end class

@@ -88,7 +88,7 @@ public class Mesh {
 		mNumOfIndices = indices.length;
 	}
 
-	protected void setTextureCoordinates(float[] textureCoords) {
+	public void setTextureCoordinates(float[] textureCoords) {
 		byteBuf = ByteBuffer.allocateDirect(textureCoords.length * 4);
 		byteBuf.order(ByteOrder.nativeOrder());
 		mTextureBuffer = byteBuf.asFloatBuffer();

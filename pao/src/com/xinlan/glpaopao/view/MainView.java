@@ -2,6 +2,9 @@ package com.xinlan.glpaopao.view;
 
 import com.xinlan.base.components.MainRender;
 import com.xinlan.glpaopao.MainActivity;
+import com.xinlan.glpaopao.components.Background;
+import com.xinlan.glpaopao.components.BitmapDataContent;
+
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 
@@ -10,6 +13,10 @@ public class MainView extends GLSurfaceView implements Runnable {
 	private Thread mThread;
 
 	public static int screenH, screenW;
+	
+	//控件
+	public BitmapDataContent mContent;
+	public Background mBackground;
 
 	public MainView(Context context) {
 		super(context);
@@ -22,6 +29,12 @@ public class MainView extends GLSurfaceView implements Runnable {
 	}
 
 	private void initGame() {
+		mContent = new BitmapDataContent(this);
+		mContent.loadImages();
+		
+		mBackground = new Background(this);
+		mBackground.loadImage(mContent.getBgBitmap());
+		mRender.addMesh(mBackground.getMesh());
 		// Bitmap
 		// bgBitmap=XinlanUtils.loadBitmapFromAssets("game_background_layer_3.png",
 		// mContext);
@@ -35,6 +48,7 @@ public class MainView extends GLSurfaceView implements Runnable {
 	}
 
 	private void gameMain() {
+		mBackground.logic();
 		// mBackgroud.update();
 		// mWave.update();
 	}

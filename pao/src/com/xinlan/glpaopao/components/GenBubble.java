@@ -63,11 +63,10 @@ public class GenBubble {
 			mBubble.setY(mBubble.y);
 			break;
 		case STATUS_FIRING:// 发射泡泡
-			// context.getGroupBubbles().setTempBubble(mBubble);
+			context.groupBubbles.setTempBubble(mBubble);
 			status = STATUS_ISFIRING;
 			break;
 		case STATUS_ISFIRING:
-			mBubble.moveUpdate();
 			break;
 		case STATUS_READY:
 			break;

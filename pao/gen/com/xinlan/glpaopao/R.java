@@ -20,14 +20,12 @@ public final class R {
         public static final int bg=0x7f020001;
         public static final int black=0x7f020002;
         public static final int blue=0x7f020003;
-        public static final int bubble=0x7f020004;
-        public static final int game_background_layer_1=0x7f020005;
-        public static final int gray=0x7f020006;
-        public static final int green=0x7f020007;
-        public static final int ic_action_search=0x7f020008;
-        public static final int ic_launcher=0x7f020009;
-        public static final int red=0x7f02000a;
-        public static final int yellow=0x7f02000b;
+        public static final int gray=0x7f020004;
+        public static final int green=0x7f020005;
+        public static final int ic_action_search=0x7f020006;
+        public static final int ic_launcher=0x7f020007;
+        public static final int red=0x7f020008;
+        public static final int yellow=0x7f020009;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;

@@ -7,6 +7,7 @@ import com.xinlan.glpaopao.components.Background;
 import com.xinlan.glpaopao.components.BitmapDataContent;
 import com.xinlan.glpaopao.components.Bubble;
 import com.xinlan.glpaopao.components.GenBubble;
+import com.xinlan.glpaopao.components.GroupBubbles;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
@@ -23,6 +24,7 @@ public class MainView extends GLSurfaceView implements Runnable {
 	public Background mBackground;
 	public GenBubble genBubble;
 	public Arrow arrow;
+	public GroupBubbles groupBubbles;
 
 	public MainView(Context context) {
 		super(context);
@@ -46,13 +48,14 @@ public class MainView extends GLSurfaceView implements Runnable {
 
 		arrow =new Arrow(this);
 		genBubble = new GenBubble(this);
+		groupBubbles = new GroupBubbles(this);
+		groupBubbles.init();
 	}
 
 	private void gameMain() {
 		mBackground.logic();
 		genBubble.logic();
-		// mBackgroud.update();
-		// mWave.update();
+		groupBubbles.logic();
 	}
 
 	@Override

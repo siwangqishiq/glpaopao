@@ -22,7 +22,7 @@ public class GroupBubbles {
 	private Bubble tempBubble;// 临时泡泡
 	private Paint paint;
 
-	private double dRotate = 0.01f;
+	//private double dRotate = 0.01f;
 	private float rotateSpeed = 0.0f;
 	private float descdRotate = 0.0005f;
 
@@ -143,7 +143,7 @@ public class GroupBubbles {
 
 	private void hitRotate(Bubble bubble) {
 		float distance = Common
-				.distance(bubble.x, bubble.y, center_x, center_y);
+				.distance(bubble.x, MainView.screenH-bubble.y, center_x, center_y);
 		float force = VectorUtil.calCosTwoVector(bubble.dx, bubble.dy,
 				center_x, 0);
 		rotateSpeed = distance * force / 2000;
@@ -189,16 +189,16 @@ public class GroupBubbles {
 	 * @param centerX
 	 * @param centerY
 	 */
-	private void rotateItem(Bubble bubble) {
-		float x = bubble.x;
-		float y = bubble.y;
-		float sinA = (float) Math.sin(dRotate);
-		float cosA = (float) Math.cos(dRotate);
-		float newX = center_x + (x - center_x) * cosA - (y - center_y) * sinA;
-		float newY = center_y + (y - center_y) * cosA + (x - center_x) * sinA;
-		bubble.setX(newX);
-		bubble.setY(newY);
-	}
+//	private void rotateItem(Bubble bubble) {
+//		float x = bubble.x;
+//		float y = bubble.y;
+//		float sinA = (float) Math.sin(dRotate);
+//		float cosA = (float) Math.cos(dRotate);
+//		float newX = center_x + (x - center_x) * cosA - (y - center_y) * sinA;
+//		float newY = center_y + (y - center_y) * cosA + (x - center_x) * sinA;
+//		bubble.setX(newX);
+//		bubble.setY(newY);
+//	}
 
 	private void rotateItem(Bubble bubble, double angle) {
 		float deltaX = bubble.x - center_x, deltaY = bubble.y - center_y;

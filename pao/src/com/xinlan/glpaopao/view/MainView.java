@@ -65,9 +65,9 @@ public class MainView extends GLSurfaceView implements Runnable {
 			long starttime = System.currentTimeMillis();
 			gameMain();
 			long timeForOneCycle = System.currentTimeMillis() - starttime;
-			if (timeForOneCycle < 5) {
+			if (timeForOneCycle < 12) {
 				try {
-					Thread.sleep(5 - timeForOneCycle);
+					Thread.sleep(12 - timeForOneCycle);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

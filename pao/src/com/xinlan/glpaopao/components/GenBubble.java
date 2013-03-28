@@ -23,12 +23,12 @@ public class GenBubble {
 	public int status;
 
 	private Bubble mBubble;
-	private float bubbleSpeed = -0.2f;
+	private float bubbleSpeed = -0.5f;
 	public static int[] colors = { Color.BLACK, Color.BLUE, Color.LTGRAY,
 			Color.GREEN, Color.RED, Color.YELLOW };
 	private int waitDelay = 20;
 
-	private float absSpeed = 7f;
+	private float absSpeed = 15f;
 	private float mBubble_dx, mBubble_dy;
 
 	public GenBubble(MainView context) {

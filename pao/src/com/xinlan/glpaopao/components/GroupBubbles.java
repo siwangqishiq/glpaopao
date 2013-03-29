@@ -60,7 +60,7 @@ public class GroupBubbles {
 	}
 
 	private void removeBubble(Bubble bubble) {
-		// context.disappear.addDisappearBubble(bubble);
+		context.disappearContainer.addDisappearBubble(bubble);
 	}
 
 	public void logic() {

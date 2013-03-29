@@ -20,14 +20,14 @@ public class XLDrawable extends Mesh {
 		setTextureCoordinates(textureCoordinates);
 	}
 
-	public void setWidth(int width) {
+	public void setWidth(float width) {
 		this.width = width;
 		float[] vertices = new float[] { 0, 0, 0, width, 0, 0.0f, 0, height,
 				0.0f, width, height, 0.0f };
 		setVertices(vertices);
 	}
 
-	public void setHeight(int height) {
+	public void setHeight(float height) {
 		this.height = height;
 		float[] vertices = new float[] { 0, 0, 0, width, 0, 0.0f, 0, height,
 				0.0f, width, height, 0.0f };

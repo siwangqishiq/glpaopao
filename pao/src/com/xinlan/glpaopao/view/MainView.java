@@ -6,6 +6,7 @@ import com.xinlan.glpaopao.components.Arrow;
 import com.xinlan.glpaopao.components.Background;
 import com.xinlan.glpaopao.components.BitmapDataContent;
 import com.xinlan.glpaopao.components.Bubble;
+import com.xinlan.glpaopao.components.DisappearContainer;
 import com.xinlan.glpaopao.components.GenBubble;
 import com.xinlan.glpaopao.components.GroupBubbles;
 import android.content.Context;
@@ -24,6 +25,7 @@ public class MainView extends GLSurfaceView implements Runnable {
 	public GenBubble genBubble;
 	public Arrow arrow;
 	public GroupBubbles groupBubbles;
+	public DisappearContainer disappearContainer;
 
 	public MainView(Context context) {
 		super(context);
@@ -49,12 +51,15 @@ public class MainView extends GLSurfaceView implements Runnable {
 		genBubble = new GenBubble(this);
 		groupBubbles = new GroupBubbles(this);
 		groupBubbles.init();
+		
+		disappearContainer = new DisappearContainer(this);
 	}
 
 	private void gameMain() {
 		mBackground.logic();
 		genBubble.logic();
 		groupBubbles.logic();
+		disappearContainer.logic();
 	}
 
 	@Override

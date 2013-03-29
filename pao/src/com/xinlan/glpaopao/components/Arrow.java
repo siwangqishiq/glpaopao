@@ -27,8 +27,8 @@ public class Arrow {
 		x = MainView.screenW / 2;
 		y = MainView.screenH-Bubble.RADIUS;
 		mImage = new XLDrawable(x, y, 0, bitmap.getWidth(), bitmap.getHeight());
-		mImage.rotateCenterX=0;
-		mImage.rotateCenterY=-bitmap.getHeight()/2;
+		mImage.centerX=0;
+		mImage.centerY=-bitmap.getHeight()/2;
 		mImage.loadBitmap(bitmap, GL10.GL_REPEAT, GL10.GL_CLAMP_TO_EDGE);
 		float textureCoordinates[] = { 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
 				1.0f, 0.0f, };// 映射坐标

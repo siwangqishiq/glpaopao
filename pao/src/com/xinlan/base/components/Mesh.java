@@ -28,7 +28,7 @@ public class Mesh {
 	public float rx = 0;
 	public float ry = 0;
 	public float rz = 0;
-	public float rotateCenterX, rotateCenterY;
+	public float centerX, centerY;
 	public float scale = 1f;
 	public boolean shouldBeDrawn = true;
 
@@ -57,11 +57,10 @@ public class Mesh {
 			gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, mTextureBuffer);
 			gl.glBindTexture(GL10.GL_TEXTURE_2D, mTextureId);
 		}
-		gl.glScalef(scale, scale, 1);
 		gl.glTranslatef(x, y, z);
+		gl.glScalef(scale, scale, 1);
 		gl.glRotatef(rz, 0, 0, 1);
-		gl.glTranslatef(rotateCenterX, rotateCenterY, 0);
-
+		gl.glTranslatef(centerX, centerY, 0);
 
 		gl.glDrawElements(GL10.GL_TRIANGLES, mNumOfIndices,
 				GL10.GL_UNSIGNED_SHORT, mIndicesBuffer);

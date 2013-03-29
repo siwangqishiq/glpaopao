@@ -2,6 +2,7 @@ package com.xinlan.glpaopao.components;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import com.xinlan.base.components.Mesh;
 import com.xinlan.base.components.XLDrawable;
 import com.xinlan.glpaopao.view.MainView;
 
@@ -23,7 +24,7 @@ public class Bubble {
 	private int color;
 
 	private float width, height;
-	private XLDrawable mImage;
+	public XLDrawable mImage;
 
 	public static final int STATUS_NORMAL = 1;
 	public static final int STATUS_DEAD = 2;;
@@ -82,17 +83,20 @@ public class Bubble {
 		mImage.y = y - radius;
 	}
 
+	public Mesh getMesh() {
+		return mImage;
+	}
+
 	public void moveUpdate() {
 		x += dx;
 		y += dy;
 		mImage.x = x - radius;
 		mImage.y = y - radius;
-
-		if (x <= -radius || x >= MainView.screenW + radius || y <= -radius
-				|| y >= MainView.screenH + radius) {
-			context.genBubble.status = GenBubble.STATUS_CANLOAD;
-			context.mRender.removeMesh(mImage);
-			System.gc();
-		}
+		// if (x <= -radius || x >= MainView.screenW + radius || y <= -radius
+		// || y >= MainView.screenH + radius) {
+		// context.genBubble.status = GenBubble.STATUS_CANLOAD;
+		// context.mRender.removeMesh(mImage);
+		// System.gc();
+		// }
 	}
 }// end class

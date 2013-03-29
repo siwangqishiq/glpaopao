@@ -8,7 +8,6 @@ import com.xinlan.glpaopao.components.BitmapDataContent;
 import com.xinlan.glpaopao.components.Bubble;
 import com.xinlan.glpaopao.components.GenBubble;
 import com.xinlan.glpaopao.components.GroupBubbles;
-
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.view.MotionEvent;
@@ -77,7 +76,6 @@ public class MainView extends GLSurfaceView implements Runnable {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		// genBubble.onTouchEvent(event);
 		genBubble.onTouchEvent(event);
 		return true;
 	}

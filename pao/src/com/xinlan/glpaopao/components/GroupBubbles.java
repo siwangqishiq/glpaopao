@@ -5,6 +5,7 @@ import com.xinlan.glpaopao.view.MainView;
 import com.xinlan.utils.Common;
 import com.xinlan.utils.VectorUtil;
 import android.graphics.Paint;
+import android.view.MotionEvent;
 
 /**
  * 
@@ -14,15 +15,16 @@ import android.graphics.Paint;
 public class GroupBubbles {
 	public static final int ROW_NUM = 5;
 	public static final int COL_NUM = 5;
+	public static final float THREE_FOUR_PI = (float) ((Math.PI * 3) / 4);
+	public static final float ONE_FOUR_PI = (float) (Math.PI / 4);
 
 	private MainView context;
 	private float center_x, center_y;
 	public LinkedList<Bubble> root;
 	private LinkedList<Bubble> hitList;
 	private Bubble tempBubble;// 临时泡泡
-	private Paint paint;
 
-	//private double dRotate = 0.01f;
+	// private double dRotate = 0.01f;
 	private float rotateSpeed = 0.0f;
 	private float descdRotate = 0.0005f;
 
@@ -32,8 +34,6 @@ public class GroupBubbles {
 		this.context = context;
 		root = new LinkedList<Bubble>();
 		hitList = new LinkedList<Bubble>();
-		paint = new Paint();
-		paint.setAntiAlias(true);
 		center_x = MainView.screenW / 2;
 		center_y = MainView.screenH / 2;
 	}
@@ -45,8 +45,8 @@ public class GroupBubbles {
 	private void genBubbles(int layer) {
 		for (int i = 0; i < layer; i++) {
 			if (i == 0) {
-				root.add(new Bubble(context,context.mContent, center_x, center_y,
-						GenBubble.genColor()));
+				root.add(new Bubble(context, context.mContent, center_x,
+						center_y, GenBubble.genColor()));
 			} else {
 				genInitBubble(center_x, center_y, 6 * i, i
 						* (Bubble.RADIUS + Bubble.RADIUS));
@@ -55,12 +55,12 @@ public class GroupBubbles {
 	}
 
 	public void setTempBubble(Bubble bubble) {
-		//context.soundPlayer.playSound(R.raw.fire_bubble);// 发射泡泡
+		// context.soundPlayer.playSound(R.raw.fire_bubble);// 发射泡泡
 		this.tempBubble = bubble;
 	}
 
 	private void removeBubble(Bubble bubble) {
-		//context.disappear.addDisappearBubble(bubble);
+		// context.disappear.addDisappearBubble(bubble);
 	}
 
 	public void logic() {
@@ -72,20 +72,20 @@ public class GroupBubbles {
 			if (tempBubble.x <= tempBubble.radius
 					|| tempBubble.x > MainView.screenW - tempBubble.radius) {
 				tempBubble.dx *= -1;
-				//context.soundPlayer.playSound(R.raw.click2);
+				// context.soundPlayer.playSound(R.raw.click2);
 			}
 
-			if (tempBubble.y<=0 ||
-					tempBubble.y > MainView.screenH - tempBubble.radius) {// 碰到墙壁
+			if (tempBubble.y <= 0
+					|| tempBubble.y > MainView.screenH - tempBubble.radius) {// 碰到墙壁
 				tempBubble.dy *= -1;
-				//context.soundPlayer.playSound(R.raw.click2);
+				// context.soundPlayer.playSound(R.raw.click2);
 			}
 
 			if (tempBubble.x <= -tempBubble.radius// 越过边界
 					|| tempBubble.x > MainView.screenW + tempBubble.radius
 					|| tempBubble.y <= -tempBubble.radius
 					|| tempBubble.y > MainView.screenH + tempBubble.radius) {
-				//context.getGenBubble().status = GenBubble.STATUS_CANLOAD;
+				// context.getGenBubble().status = GenBubble.STATUS_CANLOAD;
 				tempBubble = null;
 				System.gc();
 			} else {
@@ -97,11 +97,11 @@ public class GroupBubbles {
 				}// end for
 				if (hitList.size() >= 1) {// 碰撞
 					if (tempBubble.getColor() == hitList.get(0).getColor()) {// 消除事件
-						//context.soundPlayer.playSound(R.raw.kill_bubble);
+						// context.soundPlayer.playSound(R.raw.kill_bubble);
 						removeBubble(hitList.get(0));
 						removeBubble(tempBubble);
 					} else {// 无消除
-						//context.soundPlayer.playSound(R.raw.click1);
+						// context.soundPlayer.playSound(R.raw.click1);
 					}
 					for (Bubble bubble : hitList) {
 						hitRelocation(tempBubble, bubble);
@@ -119,11 +119,7 @@ public class GroupBubbles {
 				}
 			}
 		}// end if
-		
-//		for (Bubble bubble : root) {// 所有泡泡旋转
-//			rotateItem(bubble);
-//		}// end for
-		
+
 		if (Math.abs(rotateSpeed) > 0.001f) {
 			// 提前计算出转动三角函数值
 			rotateSinA = (float) Math.sin(rotateSpeed);
@@ -142,18 +138,38 @@ public class GroupBubbles {
 	}
 
 	private void hitRotate(Bubble bubble) {
-		float distance = Common
-				.distance(bubble.x, MainView.screenH-bubble.y, center_x, center_y);
-		float force = VectorUtil.calCosTwoVector(bubble.dx, bubble.dy,
+		float distance = Common.distance(bubble.x, MainView.screenH - bubble.y,
+				center_x, center_y);
+		float angle = VectorUtil.calCosTwoVector(bubble.dx, bubble.dy,
 				center_x, 0);
-		rotateSpeed = distance * force / 2000;
+		float force = Math.abs(angle);
+		
+		rotateSpeed = (distance * force / 2000)*detectRotateDir(bubble);
+	}
+
+	private int detectRotateDir(Bubble bubble) {
+		float x = bubble.x, y = bubble.y;
+		float x0 = center_x, y0 = center_y;
+		if (y - y0 >= -(x - x0) && y - y0 >= x - x0) {
+			return -Common.getFlag(bubble.dx);
+		}
+		if (y - y0 < -(x - x0) && y - y0 >= x - x0) {
+			return -Common.getFlag(bubble.dy);
+		}
+		if (y - y0 < -(x - x0) && y - y0 < x - x0) {
+			return Common.getFlag(bubble.dx);
+		}
+		if (y - y0 >= -(x - x0) && y - y0 < x - x0) {
+			return Common.getFlag(bubble.dy);
+		}
+		return 1;
 	}
 
 	private void genInitBubble(float x, float y, int totals, float r) {
 		float dAngle = (float) ((2 * Math.PI) / totals);
 		float angle = 0.0f;
 		for (int i = 0; i < totals; i++) {
-			Bubble newBubble = new Bubble(context,context.mContent, center_x
+			Bubble newBubble = new Bubble(context, context.mContent, center_x
 					+ (float) (r * Math.cos(angle)), center_y
 					+ (float) (r * Math.sin(angle)), GenBubble.genColor());
 			root.add(newBubble);
@@ -189,16 +205,16 @@ public class GroupBubbles {
 	 * @param centerX
 	 * @param centerY
 	 */
-//	private void rotateItem(Bubble bubble) {
-//		float x = bubble.x;
-//		float y = bubble.y;
-//		float sinA = (float) Math.sin(dRotate);
-//		float cosA = (float) Math.cos(dRotate);
-//		float newX = center_x + (x - center_x) * cosA - (y - center_y) * sinA;
-//		float newY = center_y + (y - center_y) * cosA + (x - center_x) * sinA;
-//		bubble.setX(newX);
-//		bubble.setY(newY);
-//	}
+	// private void rotateItem(Bubble bubble) {
+	// float x = bubble.x;
+	// float y = bubble.y;
+	// float sinA = (float) Math.sin(dRotate);
+	// float cosA = (float) Math.cos(dRotate);
+	// float newX = center_x + (x - center_x) * cosA - (y - center_y) * sinA;
+	// float newY = center_y + (y - center_y) * cosA + (x - center_x) * sinA;
+	// bubble.setX(newX);
+	// bubble.setY(newY);
+	// }
 
 	private void rotateItem(Bubble bubble, double angle) {
 		float deltaX = bubble.x - center_x, deltaY = bubble.y - center_y;
